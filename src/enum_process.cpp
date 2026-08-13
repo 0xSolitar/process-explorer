@@ -1,5 +1,4 @@
-#include "../include/structs.h"
-#include "../include/ntdll_defs.h"
+#include "../include/enum_process.h"
 
 std::vector<PROCESS_ENTRY> enum_processes() {
     std::vector<PROCESS_ENTRY> processes;

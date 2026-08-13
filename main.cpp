@@ -1,5 +1,6 @@
-#include "include/structs.h"
+#include "include/types/process.h"
 #include "include/utils.h"
+#include "include/enum_process.h"
 
 int main() {
     std::vector<PROCESS_ENTRY> entries = enum_processes();
