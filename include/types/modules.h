@@ -5,4 +5,5 @@
 
 struct MODULE_ENTRY {
     std::wstring name;
+    std::wstring path;
 };
