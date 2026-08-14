@@ -24,7 +24,7 @@ std::vector<PROCESS_ENTRY> enum_processes() {
         return {};
     }
 
-    auto* process = reinterpret_cast<PSYSTEM_PROCESS_INFORMATION>(buffer.data());
+    auto* process = reinterpret_cast<PSYSTEM_PROCESS_INFORMATION64>(buffer.data());
 
     while (true) {
         PROCESS_ENTRY entry = {
@@ -33,13 +33,15 @@ std::vector<PROCESS_ENTRY> enum_processes() {
             ),
             .image_name = std::wstring(process->ImageName.Buffer, process->ImageName.Length / sizeof(WCHAR)),
             .thread_count = process->NumberOfThreads,
-            .handle_count = process->HandleCount
+            .handle_count = process->HandleCount,
+            .kernel_time = process->KernelTime.QuadPart,
+            .user_time = process->UserTime.QuadPart,
         };
 
         processes.push_back(entry);
 
         if (process->NextEntryOffset == 0) break;
-        process = reinterpret_cast<PSYSTEM_PROCESS_INFORMATION>(
+        process = reinterpret_cast<PSYSTEM_PROCESS_INFORMATION64>(
             reinterpret_cast<BYTE*>(process) +
             process->NextEntryOffset);
     }
