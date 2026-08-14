@@ -12,6 +12,17 @@ void print_modules(const std::vector<Process>& entries) {
         return;
     }
     for (auto const& entry : entries) {
-        std::wcout << "Name: " << entry.name << "\tPath: " << entry.path << std::endl;
+        std::wcout << "Name: " << entry.image_name << std::endl;
     }
+}
+
+void print_threads(const std::vector<Thread> &entries) {
+    for (auto const& thread : entries) {
+        std::cout << "TID: " << thread.tid
+            << "\tCtx switches: " << thread.context_switches
+            << "\tPrio: " << thread.priority
+            << "\tBase Prio: " << thread.base_priority
+            << "\tKrnl time: " << thread.kernel_time << "\n";
+    }
+
 }

@@ -6,7 +6,7 @@ std::vector<Module> get_module_list(DWORD pid) {
 
     HANDLE hProcess = open_process_by_id(pid);
     if (!hProcess) {
-        std::cerr << "invalid handle\n";
+        std::cerr << "invalid handle in module\n";
         return {};
     }
 
@@ -32,7 +32,7 @@ std::vector<Module> get_module_list(DWORD pid) {
     );
     PLIST_ENTRY current = entry.Flink;
 
-    std::vector<MODULE_ENTRY> entries {};
+    std::vector<Module> entries {};
 
     while (current != head) {
         LDR_DATA_TABLE_ENTRY64 table_entry {};

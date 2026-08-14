@@ -1,4 +1,6 @@
 #include "../include/enum_process.h"
+#include "../include/enum_thread.h"
+#include "../include/enum_module.h"
 
 std::vector<Process> enum_processes() {
     std::vector<Process> processes;
@@ -24,7 +26,7 @@ std::vector<Process> enum_processes() {
         return {};
     }
 
-    auto* process = reinterpret_cast<PSYSTEM_PROCESS_INFORMATION64>(buffer.data());
+    auto* process = reinterpret_cast<PSYSTEM_PROCESS_INFO>(buffer.data());
 
     while (true) {
         Process entry = {
@@ -36,12 +38,14 @@ std::vector<Process> enum_processes() {
             .handle_count = process->HandleCount,
             .kernel_time = process->KernelTime.QuadPart,
             .user_time = process->UserTime.QuadPart,
+            .threads = enum_threads_from_process_info(process),
+            // .modules = get_module_list(entry.pid)
         };
 
         processes.push_back(entry);
 
         if (process->NextEntryOffset == 0) break;
-        process = reinterpret_cast<PSYSTEM_PROCESS_INFORMATION64>(
+        process = reinterpret_cast<PSYSTEM_PROCESS_INFO>(
             reinterpret_cast<BYTE*>(process) +
             process->NextEntryOffset);
     }

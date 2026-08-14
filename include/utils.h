@@ -5,3 +5,4 @@
 
 void print_processes(const std::vector<Process>& entries);
 void print_modules(const std::vector<Module>& entries);
+void print_threads(const std::vector<Thread>& entries);
