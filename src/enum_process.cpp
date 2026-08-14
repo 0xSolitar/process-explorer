@@ -1,7 +1,7 @@
 #include "../include/enum_process.h"
 
-std::vector<PROCESS_ENTRY> enum_processes() {
-    std::vector<PROCESS_ENTRY> processes;
+std::vector<Process> enum_processes() {
+    std::vector<Process> processes;
 
     auto NtQuerySystemInformation = (PNtQuerySystemInformation)GetProcAddress(GetModuleHandleW(L"ntdll"), "NtQuerySystemInformation");
     if (!NtQuerySystemInformation) {
@@ -27,7 +27,7 @@ std::vector<PROCESS_ENTRY> enum_processes() {
     auto* process = reinterpret_cast<PSYSTEM_PROCESS_INFORMATION64>(buffer.data());
 
     while (true) {
-        PROCESS_ENTRY entry = {
+        Process entry = {
             .pid = static_cast<DWORD>(
                 reinterpret_cast<ULONG_PTR>(process->UniqueProcessId)
             ),

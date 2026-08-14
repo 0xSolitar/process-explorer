@@ -7,7 +7,7 @@
 #include "thread.h"
 #include "modules.h"
 
-struct PROCESS_ENTRY
+struct Process
 {
     DWORD pid = 0;
     DWORD ppid = 0;
@@ -25,7 +25,7 @@ struct PROCESS_ENTRY
 
     double cpu_percent = 0.0;
 
-    std::vector<HANDLE_ENTRY> handles;
-    std::vector<THREAD_ENTRY> threads;
-    std::vector<MODULE_ENTRY> modules;
+    std::vector<Handle> handles;
+    std::vector<Thread> threads;
+    std::vector<Module> modules;
 };

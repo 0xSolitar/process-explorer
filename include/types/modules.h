@@ -3,7 +3,7 @@
 #include <windows.h>
 #include <string>
 
-struct MODULE_ENTRY {
+struct Module {
     std::wstring name;
     std::wstring path;
 };

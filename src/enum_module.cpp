@@ -1,6 +1,6 @@
 #include "../include/enum_module.h"
 
-std::vector<MODULE_ENTRY> get_module_list(DWORD pid) {
+std::vector<Module> get_module_list(DWORD pid) {
     auto NtReadVirtualMemory = (PNtReadVirtualMemory)GetProcAddress(GetModuleHandleW(L"ntdll"), "NtReadVirtualMemory");
     if (!NtReadVirtualMemory) return {};
 
@@ -36,7 +36,7 @@ std::vector<MODULE_ENTRY> get_module_list(DWORD pid) {
 
     while (current != head) {
         LDR_DATA_TABLE_ENTRY64 table_entry {};
-        MODULE_ENTRY module_entry {};
+        Module module_entry {};
 
         status = NtReadVirtualMemory(hProcess, reinterpret_cast<BYTE*>(current), &table_entry, sizeof(LDR_DATA_TABLE_ENTRY64), nullptr);
         if (!NT_SUCCESS(status)) continue;

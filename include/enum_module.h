@@ -4,4 +4,4 @@
 #include <vector>
 #include <string>
 
-std::vector<MODULE_ENTRY> get_module_list(DWORD pid);
+std::vector<Module> get_module_list(DWORD pid);

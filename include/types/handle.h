@@ -2,6 +2,6 @@
 
 #include <windows.h>
 
-struct HANDLE_ENTRY {
+struct Handle {
     HANDLE value = nullptr;
 };

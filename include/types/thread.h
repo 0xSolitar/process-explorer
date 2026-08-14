@@ -2,6 +2,6 @@
 
 #include <windows.h>
 
-struct THREAD_ENTRY {
+struct Thread {
     DWORD tid = 0;
 };
