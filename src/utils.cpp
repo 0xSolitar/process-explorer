@@ -6,13 +6,13 @@ void print_processes(const std::vector<Process>& entries) {
     }
 }
 
-void print_modules(const std::vector<Process>& entries) {
+void print_modules(const std::vector<Module>& entries) {
     if (entries.empty()) {
         std::cerr << "entries empty\n";
         return;
     }
     for (auto const& entry : entries) {
-        std::wcout << "Name: " << entry.image_name << std::endl;
+        std::wcout << "Name: " << entry.name << "Path: " << entry.path << std::endl;
     }
 }
 

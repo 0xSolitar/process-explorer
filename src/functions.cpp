@@ -17,7 +17,9 @@ HANDLE open_process_by_id(DWORD pid) {
     };
 
     NTSTATUS status = NtOpenProcess(&hProcess, PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, &oa, &cid);
-
+    if (!NT_SUCCESS(status)) {
+        std::cout << "status: " << status << "\n";
+    }
     return NT_SUCCESS(status) ? hProcess : nullptr;
 }
 

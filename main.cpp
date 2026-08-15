@@ -7,8 +7,7 @@ int main(int argc, char* argv[]) {
 
     for (auto const& p : processes) {
         if (p.pid == (DWORD)atoi(argv[1])) {
-            std::cout << "Threads count: " << p.thread_count << "\tThread arr size: " << p.threads.size() << "\n";
-            print_threads(p.threads);
+            print_modules(p.modules);
             break;
         }
     }

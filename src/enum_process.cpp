@@ -39,7 +39,7 @@ std::vector<Process> enum_processes() {
             .kernel_time = process->KernelTime.QuadPart,
             .user_time = process->UserTime.QuadPart,
             .threads = enum_threads_from_process_info(process),
-            // .modules = get_module_list(entry.pid)
+            .modules = get_module_list(entry.pid)
         };
 
         processes.push_back(entry);

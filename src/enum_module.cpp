@@ -5,7 +5,7 @@ std::vector<Module> get_module_list(DWORD pid) {
     if (!NtReadVirtualMemory) return {};
 
     HANDLE hProcess = open_process_by_id(pid);
-    if (!hProcess) {
+    if (hProcess == nullptr) {
         std::cerr << "invalid handle in module\n";
         return {};
     }
