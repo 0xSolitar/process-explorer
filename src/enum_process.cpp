@@ -6,7 +6,10 @@ std::vector<Process> enum_processes() {
     std::vector<Process> processes;
 
     auto NtQuerySystemInformation = (PNtQuerySystemInformation)GetProcAddress(GetModuleHandleW(L"ntdll"), "NtQuerySystemInformation");
-    if (!NtQuerySystemInformation) {
+    auto NtQueryInformationProcess = (PNtQueryInformationProcess)GetProcAddress(GetModuleHandleW(L"ntdll"), "NtQueryInformationProcess");
+    auto NtClose = (PNtClose)GetProcAddress(GetModuleHandleW(L"ntdll"), "NtClose");
+
+    if (!NtQuerySystemInformation || !NtQueryInformationProcess || !NtClose) {
         return {};
     }
 
@@ -29,10 +32,14 @@ std::vector<Process> enum_processes() {
     auto* process = reinterpret_cast<PSYSTEM_PROCESS_INFO>(buffer.data());
 
     while (true) {
+
+        DWORD pid = static_cast<DWORD>(
+            reinterpret_cast<ULONG_PTR>(process->UniqueProcessId)
+        );
+
         Process entry = {
-            .pid = static_cast<DWORD>(
-                reinterpret_cast<ULONG_PTR>(process->UniqueProcessId)
-            ),
+            .pid = pid,
+            .session_id = process->SessionId,
             .image_name = std::wstring(process->ImageName.Buffer, process->ImageName.Length / sizeof(WCHAR)),
             .thread_count = process->NumberOfThreads,
             .handle_count = process->HandleCount,

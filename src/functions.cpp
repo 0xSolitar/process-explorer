@@ -1,6 +1,8 @@
 #include "../include/functions.h"
 
 HANDLE open_process_by_id(DWORD pid) {
+    if (pid == 0) return nullptr;
+
     auto NtOpenProcess = (PNtOpenProcess)GetProcAddress(GetModuleHandleW(L"ntdll"), "NtOpenProcess");
     if (!NtOpenProcess) {
         std::cerr << "NtOpenProcess failed\n";
@@ -18,9 +20,11 @@ HANDLE open_process_by_id(DWORD pid) {
 
     NTSTATUS status = NtOpenProcess(&hProcess, PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, &oa, &cid);
     if (!NT_SUCCESS(status)) {
-        std::cout << "status: " << status << "\n";
+        std::cerr << "failed to get handle to process\n";
+        return nullptr;
     }
-    return NT_SUCCESS(status) ? hProcess : nullptr;
+
+    return hProcess;
 }
 
 LPVOID get_peb_addr(HANDLE hProcess) {

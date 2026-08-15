@@ -140,3 +140,39 @@ typedef struct _SYSTEM_THREAD_INFO
     KTHREAD_STATE ThreadState;                  // The current state of the thread.
     KWAIT_REASON WaitReason;                    // The current reason the thread is waiting.
 } SYSTEM_THREAD_INFO, *PSYSTEM_THREAD_INFO;
+
+/**
+ * The PS_PROTECTION structure is used to define the protection level of a process.
+ */
+typedef struct _PS_PROTECTION
+{
+    union
+    {
+        UCHAR Level;
+        struct
+        {
+            UCHAR Type : 3;
+            UCHAR Audit : 1;
+            UCHAR Signer : 4;
+        };
+    };
+} PS_PROTECTION, *PPS_PROTECTION;
+
+typedef enum _PS_PROTECTED_TYPE {
+    PsProtectedTypeNone = 0,
+    PsProtectedTypeProtectedLight = 1, // PPL
+    PsProtectedTypeProtected = 2       // PP
+} PS_PROTECTED_TYPE;
+
+typedef enum _PS_PROTECTED_SIGNER {
+    PsProtectedSignerNone = 0,
+    PsProtectedSignerAuthenticode = 1,
+    PsProtectedSignerCodeGen = 2,
+    PsProtectedSignerAntimalware = 3,
+    PsProtectedSignerLsa = 4,
+    PsProtectedSignerWindows = 5,
+    PsProtectedSignerWinTcb = 6,
+    PsProtectedSignerWinSystem = 7,
+    PsProtectedSignerApp = 8,
+    PsProtectedSignerMax = 9
+} PS_PROTECTED_SIGNER;
