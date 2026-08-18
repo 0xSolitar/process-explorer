@@ -15,4 +15,4 @@ int main(int argc, char* argv[]) {
 
 ## TO DO
 
-Memory stuffs (like VAD tree), handles enumeration, finding a way to enumerate modules of PPL and protected processes.
+Memory stuffs (like VAD tree), handles enumeration, finding a way to enumerate modules of PPL and protected processes, coffee, diner.
