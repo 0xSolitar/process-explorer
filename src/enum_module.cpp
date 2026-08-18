@@ -6,14 +6,12 @@ std::vector<Module> get_module_list(DWORD pid) {
 
     HANDLE hProcess = open_process_by_id(pid);
     if (hProcess == nullptr) {
-        std::cerr << "invalid handle in module\n";
         return {};
     }
 
     LIST_ENTRY entry{};
     LPVOID ldr = get_ldr_addr(pid);
     if (!ldr) {
-        std::cerr << "invalid ldr addr\n";
         return {};
     };
 

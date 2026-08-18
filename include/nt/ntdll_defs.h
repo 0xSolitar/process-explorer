@@ -5,7 +5,7 @@
 #include "nt_structs.h"
 
 #ifndef STATUS_INFO_LENGTH_MISMATCH
-#define STATUS_INFO_LENGTH_MISMATCH 0xC0000004
+#define STATUS_INFO_LENGTH_MISMATCH ((NTSTATUS)0xC0000004)
 #endif
 
 #ifndef STATUS_SUCCESS
@@ -13,11 +13,11 @@
 #endif
 
 #ifndef STATUS_ACCESS_DENIED
-#define STATUS_ACCESS_DENIED 0xC0000022
+#define STATUS_ACCESS_DENIED ((NTSTATUS)0xC0000022)
 #endif
 
 #ifndef STATUS_INVALID_CID
-#define STATUS_INVALID_CID 0xC000000B
+#define STATUS_INVALID_CID ((NTSTATUS)0xC000000B)
 #endif
 
 #ifndef SystemProcessInformation
@@ -26,6 +26,22 @@
 
 #ifndef ProcessProtectionInformation
 #define ProcessProtectionInformation 61
+#endif
+
+#ifndef SystemExtendedHandleInformation
+#define SystemExtendedHandleInformation  0x40
+#endif
+
+#ifndef ObjectBasicInformation
+#define ObjectBasicInformation 0
+#endif
+
+#ifndef ObjectNameInformation
+#define ObjectNameInformation 1
+#endif
+
+#ifndef ObjectTypeInformation
+#define ObjectTypeInformation 2
 #endif
 
 #define LDR_OFFSET 0x018
@@ -61,4 +77,21 @@ typedef NTSTATUS (NTAPI *PNtReadVirtualMemory)(
 
 typedef NTSTATUS (NTAPI* PNtClose)(
     _In_ _Post_ptr_invalid_ HANDLE Handle
+    );
+
+typedef NTSTATUS (NTAPI* PNtQueryObject)(
+    _In_opt_ HANDLE Handle,
+    _In_ OBJECT_INFORMATION_CLASS ObjectInformationClass,
+    _Out_writes_bytes_opt_(ObjectInformationLength) PVOID ObjectInformation,
+    _In_ ULONG ObjectInformationLength,
+    _Out_opt_ PULONG ReturnLength);
+
+typedef NTSTATUS (NTAPI* PNtDuplicateObject)(
+    _In_ HANDLE SourceProcessHandle,
+    _In_ HANDLE SourceHandle,
+    _In_opt_ HANDLE TargetProcessHandle,
+    _Out_opt_ PHANDLE TargetHandle,
+    _In_ ACCESS_MASK DesiredAccess,
+    _In_ ULONG HandleAttributes,
+    _In_ ULONG Options
     );

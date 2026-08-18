@@ -3,5 +3,7 @@
 #include <windows.h>
 
 struct Handle {
-    HANDLE value = nullptr;
+    DWORD pid;
+    ULONG_PTR value = 0;
+    ULONG access;
 };

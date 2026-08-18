@@ -20,7 +20,6 @@ HANDLE open_process_by_id(DWORD pid) {
 
     NTSTATUS status = NtOpenProcess(&hProcess, PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, &oa, &cid);
     if (!NT_SUCCESS(status)) {
-        std::cerr << "failed to get handle to process\n";
         return nullptr;
     }
 
@@ -29,7 +28,6 @@ HANDLE open_process_by_id(DWORD pid) {
 
 LPVOID get_peb_addr(HANDLE hProcess) {
     if (!hProcess) {
-        std::cerr << "Invalid handle\n";
         return nullptr;
     };
 

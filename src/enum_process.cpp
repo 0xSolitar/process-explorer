@@ -25,7 +25,7 @@ std::vector<Process> enum_processes() {
     }
 
     if (status != STATUS_SUCCESS) {
-        printf("NtQuerySystemInformation failed: 0x%X\n", status);
+        printf("NtQuerySystemInformation failed: 0x%lX\n", status);
         return {};
     }
 
