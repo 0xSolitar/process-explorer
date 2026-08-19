@@ -13,6 +13,4 @@ int main(int argc, char* argv[]) {
 }
 ```
 
-## TO DO
-
-Memory stuffs (like VAD tree), handles enumeration, finding a way to enumerate modules of PPL and protected processes, coffee, diner.
+Doing handles enumeration without using kernel driver is really slow, considering there can be thousands of open handles per-process. Not worth it
